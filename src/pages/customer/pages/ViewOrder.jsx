@@ -8,14 +8,14 @@ import { addToCart, underControl } from '../../../redux/userSlice';
 import { BasicButton, GreenButton } from '../../../utils/buttonStyles';
 import { getProductDetails, updateStuff } from '../../../redux/userHandle';
 import Popup from '../../../components/Popup';
-import { generateRandomColor, timeAgo} from '../../../utils/helperFunctions';
+import { generateRandomColor, timeAgo } from '../../../utils/helperFunctions';
 
 const ViewOrder = () => {
     const dispatch = useDispatch();
     const params = useParams();
     const productID = params.id;
 
-    const { currentUser, currentRole,productDetails, loading, status, error, responseReview, responseDetails } = useSelector(state => state.user);
+    const { currentUser, currentRole, productDetails, loading, status, error, responseReview, responseDetails } = useSelector(state => state.user);
 
     useEffect(() => {
         dispatch(getProductDetails(productID));
@@ -47,7 +47,7 @@ const ViewOrder = () => {
         dispatch(updateStuff(fields, productID, "deleteProductReview"));
     };
 
-    const reviewer = currentUser && currentUser._id
+    const reviewer = currentUser && currentUser._id;
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -74,7 +74,7 @@ const ViewOrder = () => {
             setMessage("Network Error");
             setShowPopup(true);
         }
-    }, [dispatch, responseReview,productID, status, error]);
+    }, [dispatch, responseReview, productID, status, error]);
 
     return (
         <>
@@ -88,18 +88,18 @@ const ViewOrder = () => {
                             :
                             <>
                                 <ProductContainer>
-                                    <ProductImage src={productDetails && productDetails.productImage} alt={productDetails && productDetails.productName} />
+                                    <ProductImage src={productDetails?.productImage} alt={productDetails?.productName} />
                                     <ProductInfo>
-                                        <ProductName>{productDetails && productDetails.productName}</ProductName>
+                                        <ProductName>{productDetails?.productName}</ProductName>
                                         <PriceContainer>
-                                            <PriceCost>₹{productDetails && productDetails.price && productDetails.price.cost}</PriceCost>
-                                            <PriceMrp>₹{productDetails && productDetails.price && productDetails.price.mrp}</PriceMrp>
-                                            <PriceDiscount>{productDetails && productDetails.price && productDetails.price.discountPercent}% off</PriceDiscount>
+                                            <PriceCost>₹{productDetails?.price?.cost}</PriceCost>
+                                            <PriceMrp>₹{productDetails?.price?.mrp}</PriceMrp>
+                                            <PriceDiscount>{productDetails?.price?.discountPercent}% off</PriceDiscount>
                                         </PriceContainer>
-                                        <Description>{productDetails && productDetails.description}</Description>
+                                        <Description>{productDetails?.description}</Description>
                                         <ProductDetails>
-                                            <p>Category: {productDetails && productDetails.category}</p>
-                                            <p>Subcategory: {productDetails && productDetails.subcategory}</p>
+                                            <p>Category: {productDetails?.category}</p>
+                                            <p>Subcategory: {productDetails?.subcategory}</p>
                                         </ProductDetails>
                                     </ProductInfo>
                                 </ProductContainer>
@@ -153,12 +153,11 @@ const ViewOrder = () => {
                                             <ReviewCard key={index}>
                                                 <ReviewCardDivision>
                                                     <Avatar sx={{ width: "60px", height: "60px", marginRight: "1rem", backgroundColor: generateRandomColor(review._id) }}>
-                                                        {String(reviewreviewername).charAt(0)}
+                                                        {String(review.reviewer.name).charAt(0)}
                                                     </Avatar>
                                                     <ReviewDetails>
-                                                        <Typography variant="h6">{reviewreviewername}</Typography>
+                                                        <Typography variant="h6">{review.reviewer.name}</Typography>
                                                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-
                                                             <Typography variant="body2">
                                                                 {timeAgo(review.date)}
                                                             </Typography>
@@ -188,13 +187,13 @@ const ViewOrder = () => {
                                                                 onClick={handleCloseMenu}
                                                             >
                                                                 <MenuItem onClick={() => {
-                                                                    handleCloseMenu()
+                                                                    handleCloseMenu();
                                                                 }}>
                                                                     <Typography textAlign="center">Edit</Typography>
                                                                 </MenuItem>
                                                                 <MenuItem onClick={() => {
-                                                                    deleteHandler(review._id)
-                                                                    handleCloseMenu()
+                                                                    deleteHandler(review._id);
+                                                                    handleCloseMenu();
                                                                 }}>
                                                                     <Typography textAlign="center">Delete</Typography>
                                                                 </MenuItem>
@@ -235,7 +234,6 @@ const ProductContainer = styled.div`
 
 const ProductImage = styled.img`
     max-width: 300px;
-    /* width: 50%; */
     margin-bottom: 20px;
 `;
 
@@ -290,29 +288,29 @@ const ReviewWritingContainer = styled.div`
     gap: 2rem;
     justify-content: center;
     align-items: center;
-    flex-direction:column;
+    flex-direction: column;
 `;
 
 const ReviewContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 `;
 
 const ReviewCard = styled(Card)`
-  && {
-    background-color: white;
-    margin-bottom: 2rem;
-    padding: 1rem;
-  }
+    && {
+        background-color: white;
+        margin-bottom: 2rem;
+        padding: 1rem;
+    }
 `;
 
 const ReviewCardDivision = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
 `;
 
 const ReviewDetails = styled.div`
-  flex: 1;
+    flex: 1;
 `;

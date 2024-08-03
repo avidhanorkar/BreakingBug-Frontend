@@ -16,6 +16,7 @@ const ViewProductSeller = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const productID = params.id;
+  const buttonText = "Click Me"
 
   const [showTab, setShowTab] = useState(false);
 

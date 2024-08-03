@@ -111,7 +111,7 @@ const CustomerOrders = () => {
                             </Stack>
 
                             <Grid container spacing={3}>
-                                {specificProductData && specificProductData.map((product, index) => (
+                                {responseSpecificProducts && responseSpecificProducts.map((product, index) => (
                                     <Grid key={index} xs={12} sm={6} md={3}>
                                         <ProductCard product={product} />
                                     </Grid>

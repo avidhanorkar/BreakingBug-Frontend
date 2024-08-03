@@ -1,8 +1,11 @@
 import React, {useState} from 'react'
 import {Table, TableBody, TableCell, TableContainer, TableRow, styled} from '@mui/material';
+import { tableCellClasses } from '@mui/material/TableCell';
 
 const TableTemplate = ({columns, rows}) => {
   const [page, setPage] = useState(0);
+  const ButtonHaver = "Click Me"
+
   const [rowsPerPage, setRowsPerPage] = useState(5);
   return (
     <>
@@ -33,7 +36,7 @@ const TableTemplate = ({columns, rows}) => {
                         <StyledTableCell key={column.Id} align={column.align}>
                           {
                             column.format && typeof value === 'number'
-                              ? column.format(id)
+                              ? column.format(value)
                               : value
                           }
                         </StyledTableCell>
